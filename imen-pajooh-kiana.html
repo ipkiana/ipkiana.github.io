@@ -1,0 +1,1033 @@
+<!DOCTYPE html>
+<html lang="fa" dir="rtl">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>ایمن پژوه کیانا | راهکارهای فناوری اطلاعات سازمانی</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Vazirmatn:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet" />
+  <style>
+    /* ── TOKENS ─────────────────────────────── */
+    :root {
+      --bg0: #05101F;
+      --bg1: #091828;
+      --bg2: #0D2035;
+      --bg3: #122840;
+      --cyan: #00C2FF;
+      --cyan-dim: rgba(0,194,255,.12);
+      --cyan-dim2: rgba(0,194,255,.06);
+      --gold: #C9923A;
+      --gold-lt: #E4B45A;
+      --gold-dim: rgba(201,146,58,.18);
+      --t0: #DDE9F2;
+      --t1: #8DADC6;
+      --t2: #4A6B84;
+      --border: rgba(0,194,255,.12);
+      --border-g: rgba(201,146,58,.22);
+      --radius: 14px;
+      --shadow: 0 24px 64px rgba(0,0,0,.55);
+    }
+
+    /* ── RESET ──────────────────────────────── */
+    *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
+    body {
+      font-family: 'Vazirmatn', sans-serif;
+      background: var(--bg0);
+      color: var(--t0);
+      direction: rtl;
+      overflow-x: hidden;
+      line-height: 1.7;
+    }
+    a { color: inherit; text-decoration: none; }
+    img { max-width: 100%; }
+
+    /* ── HEADER ─────────────────────────────── */
+    header {
+      position: fixed; inset: 0 0 auto 0; z-index: 200;
+      height: 68px;
+      display: flex; align-items: center; justify-content: space-between;
+      padding: 0 2rem;
+      background: rgba(5,16,31,.85);
+      backdrop-filter: blur(22px);
+      border-bottom: 1px solid var(--border);
+      transition: background .3s;
+    }
+    .logo {
+      display: flex; align-items: center; gap: .75rem;
+      font-size: 1.05rem; font-weight: 700;
+    }
+    .logo span { color: var(--cyan); }
+    .logo-mark {
+      width: 40px; height: 40px; flex-shrink: 0;
+    }
+    nav { display: flex; align-items: center; gap: 1.75rem; }
+    nav a {
+      font-size: .88rem; font-weight: 500; color: var(--t1);
+      transition: color .2s;
+    }
+    nav a:hover { color: var(--cyan); }
+    .btn {
+      display: inline-flex; align-items: center; gap: .4rem;
+      font-family: 'Vazirmatn', sans-serif;
+      font-weight: 700; font-size: .875rem;
+      border-radius: 8px; cursor: pointer;
+      transition: all .2s; border: none;
+    }
+    .btn-cta {
+      background: var(--cyan); color: #05101F;
+      padding: .55rem 1.35rem;
+    }
+    .btn-cta:hover { background: #33CFFF; transform: translateY(-1px); }
+    .btn-ghost {
+      background: transparent; color: var(--cyan);
+      border: 1.5px solid var(--cyan);
+      padding: .55rem 1.35rem;
+    }
+    .btn-ghost:hover { background: var(--cyan-dim); }
+    .btn-lg { padding: .8rem 2rem; font-size: 1rem; border-radius: 10px; }
+    .mobile-menu-btn {
+      display: none; background: none; border: 1px solid var(--border);
+      border-radius: 7px; padding: .4rem .6rem;
+      color: var(--t0); font-size: 1.25rem; cursor: pointer;
+    }
+
+    /* ── HERO ───────────────────────────────── */
+    .hero {
+      position: relative; min-height: 100svh;
+      display: flex; flex-direction: column;
+      align-items: center; justify-content: center;
+      padding: 9rem 1.5rem 3rem; overflow: hidden;
+    }
+    #hero-canvas {
+      position: absolute; inset: 0; width: 100%; height: 100%;
+      pointer-events: none;
+    }
+    .hero-inner {
+      position: relative; z-index: 2; width: 100%; max-width: 860px;
+      text-align: center;
+    }
+    .badge {
+      display: inline-flex; align-items: center; gap: .5rem;
+      background: var(--cyan-dim); border: 1px solid rgba(0,194,255,.28);
+      border-radius: 100px; padding: .35rem 1.1rem;
+      font-size: .78rem; font-weight: 600; color: var(--cyan);
+      margin-bottom: 2rem;
+    }
+    .badge-dot { width: 7px; height: 7px; border-radius: 50%; background: var(--cyan); animation: pulse 2s infinite; }
+    @keyframes pulse { 0%,100%{opacity:1;transform:scale(1)} 50%{opacity:.5;transform:scale(1.4)} }
+    .hero h1 {
+      font-size: clamp(2.4rem, 6.5vw, 4.6rem);
+      font-weight: 900; line-height: 1.18;
+      letter-spacing: -.03em;
+      margin-bottom: 1.5rem;
+    }
+    .hero h1 em { font-style: normal; color: var(--cyan); }
+    .hero h1 strong { font-style: normal; color: var(--gold-lt); }
+    .hero-sub {
+      font-size: 1.05rem; color: var(--t1); line-height: 1.85;
+      max-width: 600px; margin: 0 auto 2.75rem;
+    }
+    .hero-cta { display: flex; gap: 1rem; justify-content: center; flex-wrap: wrap; }
+
+    /* Stats bar */
+    .stats-bar {
+      position: relative; z-index: 2;
+      display: grid; grid-template-columns: repeat(4,1fr);
+      gap: 0;
+      max-width: 860px; width: 100%;
+      margin-top: 5rem;
+      background: var(--bg2);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      overflow: hidden;
+    }
+    .stat {
+      padding: 1.5rem 1rem; text-align: center;
+      border-left: 1px solid var(--border);
+    }
+    .stat:last-child { border-left: none; }
+    .stat-num {
+      display: block; font-size: 2.1rem; font-weight: 900;
+      color: var(--cyan); line-height: 1;
+    }
+    .stat-label { font-size: .78rem; color: var(--t2); margin-top: .4rem; }
+
+    /* ── GLOW LINE ─────────────────────────── */
+    .glow-sep { height: 1px; background: linear-gradient(to left, transparent, var(--cyan-dim), transparent); }
+
+    /* ── SECTION BASE ───────────────────────── */
+    section { padding: 6rem 1.5rem; }
+    .wrap { max-width: 1160px; margin: 0 auto; }
+    .eyebrow {
+      display: inline-flex; align-items: center; gap: .55rem;
+      color: var(--cyan); font-size: .76rem; font-weight: 700;
+      letter-spacing: .1em; text-transform: uppercase; margin-bottom: .9rem;
+    }
+    .eyebrow::before { content: ''; width: 22px; height: 2px; background: var(--cyan); border-radius: 2px; }
+    .sec-title {
+      font-size: clamp(1.7rem, 4.5vw, 2.8rem);
+      font-weight: 900; line-height: 1.22; margin-bottom: .9rem;
+    }
+    .sec-title em { font-style: normal; color: var(--cyan); }
+    .sec-title strong { font-style: normal; color: var(--gold-lt); }
+    .sec-desc { color: var(--t1); font-size: .95rem; line-height: 1.85; max-width: 520px; }
+
+    /* ── SERVICES ───────────────────────────── */
+    #services { background: linear-gradient(180deg, var(--bg0) 0%, var(--bg1) 100%); }
+    .svc-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+      gap: 1.25rem; margin-top: 3.5rem;
+    }
+    .svc-card {
+      background: var(--bg2); border: 1px solid var(--border);
+      border-radius: var(--radius); padding: 1.75rem 1.75rem 1.5rem;
+      transition: transform .3s, border-color .3s, box-shadow .3s;
+      position: relative; overflow: hidden;
+    }
+    .svc-card::after {
+      content: ''; position: absolute; top: 0; right: 0; left: 0;
+      height: 2px; background: linear-gradient(to left, var(--cyan), #0066FF);
+      transform: scaleX(0); transform-origin: right;
+      transition: transform .35s;
+    }
+    .svc-card:hover { transform: translateY(-5px); border-color: rgba(0,194,255,.3); box-shadow: var(--shadow), 0 0 40px rgba(0,194,255,.06); }
+    .svc-card:hover::after { transform: scaleX(1); }
+    .svc-ico {
+      width: 50px; height: 50px; border-radius: 12px;
+      background: var(--cyan-dim); display: flex; align-items: center;
+      justify-content: center; font-size: 1.45rem; margin-bottom: 1.25rem;
+    }
+    .svc-name { font-size: 1.05rem; font-weight: 700; margin-bottom: .65rem; }
+    .svc-desc { font-size: .84rem; color: var(--t1); line-height: 1.75; }
+    .svc-tags { display: flex; flex-wrap: wrap; gap: .35rem; margin-top: 1.1rem; }
+    .tag {
+      background: var(--cyan-dim2); color: var(--cyan);
+      border: 1px solid rgba(0,194,255,.15);
+      border-radius: 5px; padding: .18rem .55rem;
+      font-size: .68rem; font-weight: 700; letter-spacing: .03em;
+    }
+
+    /* ── ABOUT ──────────────────────────────── */
+    #about { background: var(--bg1); }
+    .about-grid {
+      display: grid; grid-template-columns: 1fr 1fr;
+      gap: 5rem; align-items: center; margin-top: 3rem;
+    }
+    .feat-list { display: flex; flex-direction: column; gap: 1.5rem; margin-top: 2rem; }
+    .feat {
+      display: flex; gap: 1rem; align-items: flex-start;
+      padding: 1.1rem; border-radius: 12px;
+      transition: background .2s;
+    }
+    .feat:hover { background: var(--cyan-dim2); }
+    .feat-ico {
+      width: 42px; height: 42px; min-width: 42px; border-radius: 10px;
+      background: var(--cyan-dim); display: flex; align-items: center;
+      justify-content: center; font-size: 1.15rem;
+    }
+    .feat h4 { font-size: .92rem; font-weight: 700; margin-bottom: .3rem; }
+    .feat p { font-size: .82rem; color: var(--t1); line-height: 1.7; }
+
+    .about-card {
+      background: var(--bg2); border: 1px solid var(--border);
+      border-radius: 20px; padding: 2rem;
+      position: relative; padding-bottom: 4.5rem;
+    }
+    .cert-eyebrow { font-size: .72rem; font-weight: 700; color: var(--t2); margin-bottom: 1.1rem; letter-spacing: .08em; text-transform: uppercase; }
+    .cert-grid { display: grid; grid-template-columns: repeat(3,1fr); gap: .85rem; }
+    .cert-item {
+      background: var(--bg3); border: 1px solid var(--border);
+      border-radius: 10px; padding: .9rem .75rem; text-align: center;
+      transition: border-color .2s;
+    }
+    .cert-item:hover { border-color: rgba(0,194,255,.4); }
+    .cert-item .ci { font-size: 1.6rem; display: block; margin-bottom: .4rem; }
+    .cert-item .cn { font-size: .7rem; font-weight: 600; color: var(--t1); }
+    .partners { margin-top: 1.5rem; padding-top: 1.5rem; border-top: 1px solid var(--border); }
+    .partner-chips { display: flex; flex-wrap: wrap; gap: .6rem; margin-top: .8rem; }
+    .chip {
+      background: var(--bg3); border: 1px solid var(--border);
+      border-radius: 6px; padding: .38rem .8rem;
+      font-size: .75rem; font-weight: 700; color: var(--t1);
+    }
+    .chip.hl { color: var(--cyan); border-color: rgba(0,194,255,.3); }
+
+    /* Floating badge */
+    .float-badge {
+      position: absolute; bottom: -1.25rem; left: 1.75rem;
+      background: var(--bg2); border: 1px solid var(--border-g);
+      border-radius: 12px; padding: .85rem 1.1rem;
+      display: flex; align-items: center; gap: .75rem;
+      box-shadow: 0 8px 32px rgba(0,0,0,.4);
+    }
+    .float-badge .fb-icon { font-size: 1.5rem; }
+    .float-badge .fb-label { font-size: .7rem; color: var(--t2); }
+    .float-badge .fb-val { font-size: .95rem; font-weight: 800; color: var(--gold-lt); }
+
+    /* ── SECTORS ────────────────────────────── */
+    #sectors { background: var(--bg0); }
+    .sector-header { text-align: center; margin-bottom: 3.5rem; }
+    .sector-header .sec-desc { margin: 0 auto; text-align: center; }
+    .sector-grid { display: grid; grid-template-columns: repeat(4,1fr); gap: 1.25rem; }
+    .sector-card {
+      background: var(--bg2); border: 1px solid var(--border-g);
+      border-radius: var(--radius); padding: 2.1rem 1.5rem;
+      text-align: center; transition: all .3s; cursor: default;
+    }
+    .sector-card:hover {
+      border-color: var(--gold); transform: translateY(-5px);
+      box-shadow: var(--shadow), 0 0 40px rgba(201,146,58,.08);
+    }
+    .sec-ico { font-size: 2.5rem; display: block; margin-bottom: 1rem; }
+    .sec-name { font-size: 1rem; font-weight: 700; margin-bottom: .4rem; }
+    .sec-sub { font-size: .78rem; color: var(--t2); line-height: 1.55; }
+
+    /* ── WHY US ─────────────────────────────── */
+    #why { background: linear-gradient(135deg, var(--bg1) 0%, #0A1E33 100%); }
+    .why-grid { display: grid; grid-template-columns: repeat(3,1fr); gap: 1.5rem; margin-top: 3.5rem; }
+    .why-card {
+      background: var(--bg2); border: 1px solid var(--border);
+      border-radius: var(--radius); padding: 2rem 1.75rem;
+      transition: transform .3s, border-color .3s;
+    }
+    .why-card:hover { transform: translateY(-4px); border-color: rgba(0,194,255,.25); }
+    .why-num {
+      font-size: 3rem; font-weight: 900; color: var(--cyan-dim);
+      line-height: 1; margin-bottom: 1rem;
+      font-variant-numeric: tabular-nums;
+    }
+    .why-title { font-size: 1.05rem; font-weight: 700; margin-bottom: .6rem; }
+    .why-desc { font-size: .84rem; color: var(--t1); line-height: 1.75; }
+
+    /* ── CONTACT ────────────────────────────── */
+    #contact { background: var(--bg0); }
+    .contact-grid { display: grid; grid-template-columns: 1fr 1.5fr; gap: 4rem; align-items: start; margin-top: 3rem; }
+    .contact-info-list { display: flex; flex-direction: column; gap: 0; margin-top: 1.5rem; }
+    .ci-row {
+      display: flex; align-items: center; gap: 1rem;
+      padding: 1.1rem 0; border-bottom: 1px solid var(--border);
+    }
+    .ci-row:last-of-type { border-bottom: none; }
+    .ci-ico {
+      width: 44px; height: 44px; min-width: 44px;
+      background: var(--cyan-dim); border-radius: 10px;
+      display: flex; align-items: center; justify-content: center; font-size: 1.2rem;
+    }
+    .ci-label { font-size: .72rem; color: var(--t2); font-weight: 600; margin-bottom: .2rem; text-transform: uppercase; letter-spacing: .06em; }
+    .ci-val { font-size: .9rem; font-weight: 600; }
+    .contact-note {
+      margin-top: 1.75rem; padding: 1.35rem;
+      background: var(--cyan-dim2); border: 1px solid var(--border);
+      border-radius: 12px;
+    }
+    .contact-note h4 { font-size: .85rem; font-weight: 700; margin-bottom: .4rem; }
+    .contact-note p { font-size: .8rem; color: var(--t1); line-height: 1.65; }
+
+    /* Form */
+    .cform {
+      background: var(--bg2); border: 1px solid var(--border);
+      border-radius: 20px; padding: 2.25rem;
+    }
+    .cform h3 { font-size: 1.1rem; font-weight: 700; margin-bottom: 1.5rem; }
+    .frow { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; }
+    .fg { margin-bottom: 1.15rem; }
+    .fg label { display: block; font-size: .78rem; font-weight: 600; color: var(--t1); margin-bottom: .4rem; }
+    .fg input, .fg select, .fg textarea {
+      width: 100%;
+      background: var(--bg3); border: 1px solid rgba(0,194,255,.1);
+      border-radius: 8px; padding: .72rem .95rem;
+      color: var(--t0); font-size: .875rem;
+      font-family: 'Vazirmatn', sans-serif;
+      direction: rtl; outline: none;
+      transition: border-color .2s, box-shadow .2s;
+    }
+    .fg input::placeholder, .fg textarea::placeholder { color: var(--t2); }
+    .fg input:focus, .fg select:focus, .fg textarea:focus {
+      border-color: var(--cyan);
+      box-shadow: 0 0 0 3px rgba(0,194,255,.08);
+    }
+    .fg select option { background: var(--bg3); }
+    .fg textarea { resize: vertical; min-height: 95px; }
+    .fg input[dir="ltr"], .fg .ltr { direction: ltr; text-align: left; }
+    .submit-btn {
+      width: 100%; padding: .9rem; font-size: .95rem; font-weight: 700;
+      background: var(--cyan); color: #05101F;
+      border: none; border-radius: 9px; cursor: pointer;
+      font-family: 'Vazirmatn', sans-serif;
+      transition: all .2s; display: flex; align-items: center; justify-content: center; gap: .5rem;
+    }
+    .submit-btn:hover { background: #33CFFF; transform: translateY(-1px); }
+
+    /* ── FOOTER ─────────────────────────────── */
+    footer {
+      background: var(--bg1); border-top: 1px solid var(--border);
+      padding: 3.5rem 1.5rem 2rem;
+    }
+    .footer-grid {
+      max-width: 1160px; margin: 0 auto;
+      display: grid; grid-template-columns: 2fr 1fr 1fr 1fr;
+      gap: 3rem; margin-bottom: 2.5rem;
+    }
+    .fbrand p { font-size: .84rem; color: var(--t1); line-height: 1.75; margin-top: .9rem; }
+    .fcol h4 { font-size: .84rem; font-weight: 700; margin-bottom: 1.1rem; }
+    .fcol ul { list-style: none; }
+    .fcol ul li { margin-bottom: .6rem; }
+    .fcol ul li a { font-size: .82rem; color: var(--t2); transition: color .2s; }
+    .fcol ul li a:hover { color: var(--cyan); }
+    .footer-bottom {
+      max-width: 1160px; margin: 0 auto;
+      border-top: 1px solid var(--border);
+      padding-top: 1.5rem;
+      display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: .75rem;
+    }
+    .footer-bottom p { font-size: .78rem; color: var(--t2); }
+
+    /* ── REVEAL ─────────────────────────────── */
+    .reveal { opacity: 0; transform: translateY(28px); transition: opacity .65s ease, transform .65s ease; }
+    .reveal.on { opacity: 1; transform: none; }
+    .reveal-d1 { transition-delay: .1s; }
+    .reveal-d2 { transition-delay: .2s; }
+    .reveal-d3 { transition-delay: .3s; }
+    .reveal-d4 { transition-delay: .4s; }
+    .reveal-d5 { transition-delay: .5s; }
+
+    /* ── MOBILE MENU ────────────────────────── */
+    .mobile-nav {
+      display: none; position: fixed; inset: 68px 0 0 0;
+      background: rgba(5,16,31,.97); backdrop-filter: blur(20px);
+      z-index: 199; flex-direction: column; align-items: center;
+      justify-content: center; gap: 2rem;
+    }
+    .mobile-nav.open { display: flex; }
+    .mobile-nav a { font-size: 1.25rem; font-weight: 600; color: var(--t0); }
+    .mobile-nav a:hover { color: var(--cyan); }
+
+    /* ── RESPONSIVE ─────────────────────────── */
+    @media (max-width: 1000px) {
+      .about-grid { grid-template-columns: 1fr; gap: 3rem; }
+      .sector-grid { grid-template-columns: repeat(2,1fr); }
+      .why-grid { grid-template-columns: 1fr 1fr; }
+      .footer-grid { grid-template-columns: 1fr 1fr; gap: 2rem; }
+      nav { display: none; }
+      .mobile-menu-btn { display: flex; }
+      header .btn-cta { display: none; }
+    }
+    @media (max-width: 700px) {
+      .stats-bar { grid-template-columns: repeat(2,1fr); }
+      .stat:nth-child(2) { border-left: none; }
+      .stat:nth-child(3) { border-top: 1px solid var(--border); border-left: 1px solid var(--border); }
+      .stat:nth-child(4) { border-top: 1px solid var(--border); }
+      .svc-grid { grid-template-columns: 1fr; }
+      .cert-grid { grid-template-columns: repeat(2,1fr); }
+      .why-grid { grid-template-columns: 1fr; }
+      .contact-grid { grid-template-columns: 1fr; }
+      .frow { grid-template-columns: 1fr; }
+      .footer-grid { grid-template-columns: 1fr; gap: 2rem; }
+      .footer-bottom { flex-direction: column; align-items: flex-start; }
+    }
+    @media (prefers-reduced-motion: reduce) {
+      .reveal { opacity:1; transform:none; }
+      * { animation-duration:.01ms!important; transition-duration:.01ms!important; }
+    }
+  </style>
+</head>
+<body>
+
+<!-- ── HEADER ─────────────────────────────── -->
+<header id="site-header">
+  <div class="logo">
+    <svg class="logo-mark" viewBox="0 0 40 40" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <rect width="40" height="40" rx="9" fill="rgba(0,194,255,.1)"/>
+      <polygon points="20,5 35,13 35,27 20,35 5,27 5,13" stroke="#00C2FF" stroke-width="1.4" fill="none" stroke-linejoin="round"/>
+      <line x1="20" y1="5" x2="20" y2="35" stroke="#00C2FF" stroke-width=".6" stroke-dasharray="2,3" opacity=".35"/>
+      <line x1="5" y1="13" x2="35" y2="27" stroke="#00C2FF" stroke-width=".6" stroke-dasharray="2,3" opacity=".2"/>
+      <line x1="35" y1="13" x2="5" y2="27" stroke="#00C2FF" stroke-width=".6" stroke-dasharray="2,3" opacity=".2"/>
+      <circle cx="20" cy="20" r="5" fill="#00C2FF" opacity=".85"/>
+      <circle cx="20" cy="20" r="2.2" fill="#05101F"/>
+    </svg>
+    <div><span>ایمن پژوه</span> کیانا</div>
+  </div>
+  <nav>
+    <a href="#services">خدمات</a>
+    <a href="#about">درباره ما</a>
+    <a href="#sectors">صنایع</a>
+    <a href="#why">مزایا</a>
+    <a href="#contact">تماس</a>
+  </nav>
+  <a href="#contact" class="btn btn-cta">مشاوره رایگان</a>
+  <button class="mobile-menu-btn" id="menu-btn" aria-label="منو">&#9776;</button>
+</header>
+
+<!-- ── MOBILE NAV ────────────────────────── -->
+<div class="mobile-nav" id="mobile-nav">
+  <a href="#services" class="mnav-link">خدمات</a>
+  <a href="#about" class="mnav-link">درباره ما</a>
+  <a href="#sectors" class="mnav-link">صنایع</a>
+  <a href="#why" class="mnav-link">مزایا</a>
+  <a href="#contact" class="mnav-link">تماس</a>
+  <a href="#contact" class="btn btn-cta btn-lg">مشاوره رایگان</a>
+</div>
+
+<!-- ── HERO ───────────────────────────────── -->
+<section class="hero">
+  <canvas id="hero-canvas"></canvas>
+
+  <div class="hero-inner">
+    <div class="badge"><div class="badge-dot"></div>ارائه‌دهنده خدمات فناوری اطلاعات سازمانی</div>
+    <h1>
+      زیرساخت <em>ایمن</em>،<br>
+      کسب‌وکار <strong>پیشرفته</strong>
+    </h1>
+    <p class="hero-sub">
+      از شبکه و امنیت سایبری تا سرور، نظارت تصویری و DevOps —<br>
+      ایمن پژوه کیانا، شریک فناوری سازمان‌های پیشرو ایران.
+    </p>
+    <div class="hero-cta">
+      <a href="#contact" class="btn btn-cta btn-lg">درخواست مشاوره رایگان</a>
+      <a href="#services" class="btn btn-ghost btn-lg">مشاهده خدمات ↓</a>
+    </div>
+  </div>
+
+  <div class="stats-bar reveal">
+    <div class="stat">
+      <span class="stat-num" data-target="200" data-suffix="+">۰</span>
+      <span class="stat-label">خدمت تخصصی</span>
+    </div>
+    <div class="stat">
+      <span class="stat-num" data-target="50" data-suffix="+">۰</span>
+      <span class="stat-label">مشتری سازمانی</span>
+    </div>
+    <div class="stat">
+      <span class="stat-num" data-target="8" data-suffix="+">۰</span>
+      <span class="stat-label">سال تجربه</span>
+    </div>
+    <div class="stat">
+      <span class="stat-num" data-target="99" data-suffix="٪">۰</span>
+      <span class="stat-label">رضایت مشتریان</span>
+    </div>
+  </div>
+</section>
+
+<div class="glow-sep"></div>
+
+<!-- ── SERVICES ──────────────────────────── -->
+<section id="services">
+  <div class="wrap">
+    <div class="reveal">
+      <div class="eyebrow">خدمات ما</div>
+      <h2 class="sec-title">راهکارهای جامع <em>فناوری اطلاعات</em></h2>
+      <p class="sec-desc">پوشش کامل نیازهای IT سازمان با بیش از ۲۰۰ خدمت تخصصی در شش حوزه کلیدی.</p>
+    </div>
+
+    <div class="svc-grid">
+      <div class="svc-card reveal reveal-d1">
+        <div class="svc-ico">🌐</div>
+        <div class="svc-name">شبکه و ارتباطات سازمانی</div>
+        <div class="svc-desc">طراحی و پیاده‌سازی شبکه‌های سازمانی با VLAN، STP و QoS. پشتیبانی از توپولوژی‌های پیچیده با رویکرد امنیت لایه‌بندی‌شده.</div>
+        <div class="svc-tags">
+          <span class="tag">Cisco</span><span class="tag">MikroTik</span><span class="tag">Fortinet</span><span class="tag">VLAN</span><span class="tag">STP</span><span class="tag">QoS</span>
+        </div>
+      </div>
+
+      <div class="svc-card reveal reveal-d2">
+        <div class="svc-ico">🛡️</div>
+        <div class="svc-name">امنیت سایبری و Red Team</div>
+        <div class="svc-desc">ارزیابی آسیب‌پذیری، تست نفوذ حرفه‌ای، پیاده‌سازی فایروال و SOC. رویکرد دفاع در عمق برای حفاظت از دارایی‌های حیاتی.</div>
+        <div class="svc-tags">
+          <span class="tag">Pen Test</span><span class="tag">FortiGate</span><span class="tag">IDS/IPS</span><span class="tag">SOC</span><span class="tag">Red Team</span>
+        </div>
+      </div>
+
+      <div class="svc-card reveal reveal-d3">
+        <div class="svc-ico">🖥️</div>
+        <div class="svc-name">سرور و زیرساخت</div>
+        <div class="svc-desc">نصب و پیکربندی سرورهای HP ProLiant، مجازی‌سازی با VMware، Active Directory، GPO و مدیریت دامنه سازمانی.</div>
+        <div class="svc-tags">
+          <span class="tag">VMware</span><span class="tag">HP ProLiant</span><span class="tag">AD/GPO</span><span class="tag">Linux</span><span class="tag">GLPI</span>
+        </div>
+      </div>
+
+      <div class="svc-card reveal reveal-d1">
+        <div class="svc-ico">📹</div>
+        <div class="svc-name">نظارت تصویری هوشمند</div>
+        <div class="svc-desc">طراحی و راه‌اندازی سیستم‌های CCTV حرفه‌ای برای بانک‌ها، کارخانه‌ها و بنادر با قابلیت پایش از راه دور.</div>
+        <div class="svc-tags">
+          <span class="tag">IP Camera</span><span class="tag">NVR</span><span class="tag">Video Analytics</span><span class="tag">Remote View</span>
+        </div>
+      </div>
+
+      <div class="svc-card reveal reveal-d2">
+        <div class="svc-ico">📞</div>
+        <div class="svc-name">VoIP و ارتباطات یکپارچه</div>
+        <div class="svc-desc">پیاده‌سازی تلفن IP، کنفرانس ویدیویی و ارتباطات یکپارچه برای افزایش بهره‌وری و کاهش هزینه‌های ارتباطی.</div>
+        <div class="svc-tags">
+          <span class="tag">Asterisk</span><span class="tag">FreePBX</span><span class="tag">SIP</span><span class="tag">Video Conf</span>
+        </div>
+      </div>
+
+      <div class="svc-card reveal reveal-d3">
+        <div class="svc-ico">⚙️</div>
+        <div class="svc-name">DevOps و اتوماسیون</div>
+        <div class="svc-desc">راه‌اندازی خطوط CI/CD، مانیتورینگ با Grafana و LibreNMS، کانتینرسازی و اتوماسیون کامل عملیات IT.</div>
+        <div class="svc-tags">
+          <span class="tag">Docker</span><span class="tag">Grafana</span><span class="tag">LibreNMS</span><span class="tag">CI/CD</span><span class="tag">MQTT</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<div class="glow-sep"></div>
+
+<!-- ── ABOUT ──────────────────────────────── -->
+<section id="about">
+  <div class="wrap">
+    <div class="reveal">
+      <div class="eyebrow">درباره ما</div>
+      <h2 class="sec-title">تخصص و تجربه در خدمت <em>سازمان شما</em></h2>
+      <p class="sec-desc">ایمن پژوه کیانا با سال‌ها تجربه در ارائه راهکارهای IT به سازمان‌های پیشرو ایران، شریک فناوری قابل‌اتکای مشتریان خود است.</p>
+    </div>
+
+    <div class="about-grid">
+      <div class="feat-list">
+        <div class="feat reveal reveal-d1">
+          <div class="feat-ico">🔒</div>
+          <div>
+            <h4>امنیت در هر لایه</h4>
+            <p>رویکرد دفاع در عمق برای حفاظت از داده‌ها و زیرساخت در برابر تهدیدات نوین. از endpoint تا perimeter.</p>
+          </div>
+        </div>
+        <div class="feat reveal reveal-d2">
+          <div class="feat-ico">⚡</div>
+          <div>
+            <h4>پشتیبانی ۲۴ ساعته</h4>
+            <p>تیم متخصص ما در تمام ساعات شبانه‌روز آماده پاسخگویی به خرابی‌های شبکه و حوادث امنیتی است.</p>
+          </div>
+        </div>
+        <div class="feat reveal reveal-d3">
+          <div class="feat-ico">📊</div>
+          <div>
+            <h4>مانیتورینگ هوشمند</h4>
+            <p>پایش مستمر زیرساخت با Grafana، InfluxDB و LibreNMS. هشدارهای آنی پیش از وقوع خرابی.</p>
+          </div>
+        </div>
+        <div class="feat reveal reveal-d4">
+          <div class="feat-ico">🎯</div>
+          <div>
+            <h4>راهکارهای اختصاصی</h4>
+            <p>هر سازمان نیازهای منحصربه‌فرد دارد. ما راهکارهایی متناسب با اهداف کسب‌وکار شما طراحی می‌کنیم.</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="reveal reveal-d2">
+        <div class="about-card">
+          <div class="cert-eyebrow">گواهینامه‌ها و تخصص‌ها</div>
+          <div class="cert-grid">
+            <div class="cert-item"><span class="ci">🔵</span><div class="cn">Cisco CCNA</div></div>
+            <div class="cert-item"><span class="ci">🟠</span><div class="cn">Fortinet NSE</div></div>
+            <div class="cert-item"><span class="ci">🟢</span><div class="cn">VMware VCP</div></div>
+            <div class="cert-item"><span class="ci">🔴</span><div class="cn">Red Team</div></div>
+            <div class="cert-item"><span class="ci">🟣</span><div class="cn">Linux LPIC</div></div>
+            <div class="cert-item"><span class="ci">⚫</span><div class="cn">MikroTik MTCNA</div></div>
+          </div>
+          <div class="partners">
+            <div class="cert-eyebrow">همکاری‌های تخصصی</div>
+            <div class="partner-chips">
+              <div class="chip hl">HackerOne</div>
+              <div class="chip">ISACA</div>
+              <div class="chip">EC-Council</div>
+              <div class="chip">SANS</div>
+            </div>
+          </div>
+          <div class="float-badge">
+            <div class="fb-icon">⭐</div>
+            <div>
+              <div class="fb-label">رضایت‌سنجی مشتریان</div>
+              <div class="fb-val">۹۹٪ رضایت تضمینی</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<div class="glow-sep"></div>
+
+<!-- ── SECTORS ────────────────────────────── -->
+<section id="sectors">
+  <div class="wrap">
+    <div class="sector-header reveal">
+      <div class="eyebrow" style="justify-content:center;">صنایع هدف</div>
+      <h2 class="sec-title">خدمت به <strong>صنایع پیشرو</strong></h2>
+      <p class="sec-desc">تجربه اثبات‌شده در ارائه راهکارهای IT به متنوع‌ترین سازمان‌های کشور.</p>
+    </div>
+
+    <div class="sector-grid">
+      <div class="sector-card reveal reveal-d1">
+        <span class="sec-ico">🏦</span>
+        <div class="sec-name">بانک و مالی</div>
+        <div class="sec-sub">زیرساخت امن برای معاملات مالی حساس و انطباق با مقررات بانک مرکزی</div>
+      </div>
+      <div class="sector-card reveal reveal-d2">
+        <span class="sec-ico">🏛️</span>
+        <div class="sec-name">سازمان‌های دولتی</div>
+        <div class="sec-sub">شبکه‌های مقیاس‌پذیر، امن و مطمئن برای دستگاه‌های اجرایی کشور</div>
+      </div>
+      <div class="sector-card reveal reveal-d3">
+        <span class="sec-ico">🏭</span>
+        <div class="sec-name">صنعت و تولید</div>
+        <div class="sec-sub">یکپارچه‌سازی OT/IT و امنیت SCADA برای محیط‌های صنعتی</div>
+      </div>
+      <div class="sector-card reveal reveal-d4">
+        <span class="sec-ico">🚢</span>
+        <div class="sec-name">بنادر و حمل‌ونقل</div>
+        <div class="sec-sub">ارتباطات صنعتی و نظارت هوشمند برای عملیات بندری پرحجم</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<div class="glow-sep"></div>
+
+<!-- ── WHY US ─────────────────────────────── -->
+<section id="why">
+  <div class="wrap">
+    <div class="reveal">
+      <div class="eyebrow">چرا ما</div>
+      <h2 class="sec-title">تفاوت <em>ایمن پژوه کیانا</em></h2>
+      <p class="sec-desc">آنچه ما را از دیگر ارائه‌دهندگان IT متمایز می‌کند، تعهد به نتیجه است نه صرفاً ارائه خدمت.</p>
+    </div>
+
+    <div class="why-grid">
+      <div class="why-card reveal reveal-d1">
+        <div class="why-num">۰۱</div>
+        <div class="why-title">تیم متخصص دارای گواهینامه</div>
+        <div class="why-desc">کارشناسان ما دارای گواهینامه‌های بین‌المللی Cisco، Fortinet، VMware و تجربه میدانی در پروژه‌های سازمانی واقعی هستند.</div>
+      </div>
+      <div class="why-card reveal reveal-d2">
+        <div class="why-num">۰۲</div>
+        <div class="why-title">پاسخ‌گویی اضطراری ۲۴/۷</div>
+        <div class="why-desc">SLA تضمین‌شده با زمان پاسخ کمتر از یک ساعت برای حوادث اضطراری. هیچ خرابی‌ای بدون پاسخ نمی‌ماند.</div>
+      </div>
+      <div class="why-card reveal reveal-d3">
+        <div class="why-num">۰۳</div>
+        <div class="why-title">رویکرد Security-First</div>
+        <div class="why-desc">امنیت از همان مرحله طراحی تعبیه می‌شود، نه به عنوان لایه‌ای جداگانه. هر راهکار با ذهنیت Red Team ارزیابی می‌شود.</div>
+      </div>
+      <div class="why-card reveal reveal-d1">
+        <div class="why-num">۰۴</div>
+        <div class="why-title">مستندسازی کامل</div>
+        <div class="why-desc">تمام پروژه‌ها با مستندات فنی کامل، دیاگرام‌های شبکه و راهنمای بهره‌برداری تحویل داده می‌شوند.</div>
+      </div>
+      <div class="why-card reveal reveal-d2">
+        <div class="why-num">۰۵</div>
+        <div class="why-title">بومی‌سازی و انطباق</div>
+        <div class="why-desc">آشنایی کامل با مقررات و الزامات محلی ایران، از جمله الزامات بانک مرکزی، سازمان فناوری اطلاعات و نهادهای نظارتی.</div>
+      </div>
+      <div class="why-card reveal reveal-d3">
+        <div class="why-num">۰۶</div>
+        <div class="why-title">ضمانت نتیجه</div>
+        <div class="why-desc">ما نه فقط فناوری، بلکه نتیجه تحویل می‌دهیم. قراردادهای ما با معیارهای قابل اندازه‌گیری و ضمانت عملکرد تنظیم می‌شوند.</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<div class="glow-sep"></div>
+
+<!-- ── CONTACT ────────────────────────────── -->
+<section id="contact">
+  <div class="wrap">
+    <div class="reveal">
+      <div class="eyebrow">تماس با ما</div>
+      <h2 class="sec-title">با ما در <em>ارتباط باشید</em></h2>
+      <p class="sec-desc">برای مشاوره رایگان و دریافت پیشنهاد قیمت، فرم زیر را تکمیل کنید یا مستقیماً تماس بگیرید.</p>
+    </div>
+
+    <div class="contact-grid">
+      <div class="reveal reveal-d1">
+        <div class="contact-info-list">
+          <div class="ci-row">
+            <div class="ci-ico">📍</div>
+            <div>
+              <div class="ci-label">آدرس</div>
+              <div class="ci-val">بندرعباس، هرمزگان، ایران</div>
+            </div>
+          </div>
+          <div class="ci-row">
+            <div class="ci-ico">📞</div>
+            <div>
+              <div class="ci-label">تلفن</div>
+              <div class="ci-val ltr" style="direction:ltr;">+98 (76) 3200-XXXX</div>
+            </div>
+          </div>
+          <div class="ci-row">
+            <div class="ci-ico">✉️</div>
+            <div>
+              <div class="ci-label">ایمیل</div>
+              <div class="ci-val" style="direction:ltr;">info@imenpajooh.ir</div>
+            </div>
+          </div>
+          <div class="ci-row">
+            <div class="ci-ico">⏰</div>
+            <div>
+              <div class="ci-label">ساعت کاری</div>
+              <div class="ci-val">شنبه تا چهارشنبه، ۸:۰۰ تا ۱۷:۰۰</div>
+            </div>
+          </div>
+        </div>
+        <div class="contact-note" style="margin-top:1.75rem;">
+          <h4>🚨 پشتیبانی اضطراری ۲۴/۷</h4>
+          <p>برای حوادث اضطراری شبکه یا امنیت، تیم ما در تمام ساعات شبانه‌روز و ایام تعطیل آماده پاسخگویی فوری است.</p>
+        </div>
+      </div>
+
+      <div class="cform reveal reveal-d2">
+        <h3>درخواست مشاوره رایگان</h3>
+        <div class="frow">
+          <div class="fg">
+            <label>نام و نام خانوادگی</label>
+            <input type="text" placeholder="علی رضایی" />
+          </div>
+          <div class="fg">
+            <label>سازمان / شرکت</label>
+            <input type="text" placeholder="نام سازمان شما" />
+          </div>
+        </div>
+        <div class="frow">
+          <div class="fg">
+            <label>شماره تماس</label>
+            <input type="tel" placeholder="۰۹۱۲-XXXXXXX" style="direction:ltr;text-align:right;" />
+          </div>
+          <div class="fg">
+            <label>ایمیل سازمانی</label>
+            <input type="email" placeholder="you@company.ir" style="direction:ltr;text-align:right;" />
+          </div>
+        </div>
+        <div class="fg">
+          <label>حوزه مورد نیاز</label>
+          <select>
+            <option value="">انتخاب کنید...</option>
+            <option>شبکه و ارتباطات</option>
+            <option>امنیت سایبری و Red Team</option>
+            <option>سرور و زیرساخت</option>
+            <option>نظارت تصویری</option>
+            <option>VoIP و ارتباطات یکپارچه</option>
+            <option>DevOps و اتوماسیون</option>
+            <option>مشاوره جامع IT</option>
+          </select>
+        </div>
+        <div class="fg">
+          <label>شرح نیاز</label>
+          <textarea placeholder="لطفاً نیازهای فناوری اطلاعات سازمان خود را شرح دهید..."></textarea>
+        </div>
+        <button class="submit-btn" onclick="handleSubmit(this)">
+          ارسال درخواست مشاوره ←
+        </button>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ── FOOTER ─────────────────────────────── -->
+<footer>
+  <div class="footer-grid">
+    <div class="fbrand">
+      <div class="logo">
+        <svg width="36" height="36" viewBox="0 0 40 40" fill="none">
+          <rect width="40" height="40" rx="9" fill="rgba(0,194,255,.1)"/>
+          <polygon points="20,5 35,13 35,27 20,35 5,27 5,13" stroke="#00C2FF" stroke-width="1.4" fill="none" stroke-linejoin="round"/>
+          <circle cx="20" cy="20" r="5" fill="#00C2FF" opacity=".85"/>
+          <circle cx="20" cy="20" r="2.2" fill="#05101F"/>
+        </svg>
+        <div><span>ایمن پژوه</span> کیانا</div>
+      </div>
+      <p>ارائه‌دهنده خدمات جامع فناوری اطلاعات به سازمان‌های پیشرو ایران؛ از شبکه و امنیت سایبری تا زیرساخت سرور و نظارت هوشمند.</p>
+    </div>
+    <div class="fcol">
+      <h4>خدمات</h4>
+      <ul>
+        <li><a href="#services">شبکه سازمانی</a></li>
+        <li><a href="#services">امنیت سایبری</a></li>
+        <li><a href="#services">سرور و مجازی‌سازی</a></li>
+        <li><a href="#services">نظارت تصویری</a></li>
+        <li><a href="#services">VoIP</a></li>
+        <li><a href="#services">DevOps</a></li>
+      </ul>
+    </div>
+    <div class="fcol">
+      <h4>صنایع</h4>
+      <ul>
+        <li><a href="#sectors">بانک و مالی</a></li>
+        <li><a href="#sectors">سازمان دولتی</a></li>
+        <li><a href="#sectors">صنعت و تولید</a></li>
+        <li><a href="#sectors">بنادر</a></li>
+      </ul>
+    </div>
+    <div class="fcol">
+      <h4>شرکت</h4>
+      <ul>
+        <li><a href="#about">درباره ما</a></li>
+        <li><a href="#why">مزایای ما</a></li>
+        <li><a href="#contact">تماس</a></li>
+        <li><a href="#contact">مشاوره رایگان</a></li>
+      </ul>
+    </div>
+  </div>
+  <div class="footer-bottom">
+    <p>© ۱۴۰۴ ایمن پژوه کیانا. تمامی حقوق محفوظ است.</p>
+    <p style="direction:ltr;">Imen Pajooh Kiana · IT Services</p>
+  </div>
+</footer>
+
+<!-- ── SCRIPTS ────────────────────────────── -->
+<script>
+/* ── Network Canvas ─────────────────────── */
+(function () {
+  const canvas = document.getElementById('hero-canvas');
+  const ctx = canvas.getContext('2d');
+  let W, H, nodes = [], animId;
+
+  function resize() {
+    W = canvas.width = canvas.parentElement.offsetWidth;
+    H = canvas.height = canvas.parentElement.offsetHeight;
+  }
+
+  function createNodes() {
+    nodes = [];
+    const count = Math.floor((W * H) / 18000);
+    for (let i = 0; i < count; i++) {
+      nodes.push({
+        x: Math.random() * W,
+        y: Math.random() * H,
+        vx: (Math.random() - .5) * .35,
+        vy: (Math.random() - .5) * .35,
+        r: Math.random() * 1.8 + .8,
+        phase: Math.random() * Math.PI * 2
+      });
+    }
+  }
+
+  function draw(t) {
+    ctx.clearRect(0, 0, W, H);
+    const LINK = Math.min(W, H) * .28;
+
+    // connections
+    for (let i = 0; i < nodes.length; i++) {
+      for (let j = i + 1; j < nodes.length; j++) {
+        const dx = nodes[i].x - nodes[j].x;
+        const dy = nodes[i].y - nodes[j].y;
+        const d = Math.sqrt(dx * dx + dy * dy);
+        if (d < LINK) {
+          const a = (1 - d / LINK) * .45;
+          ctx.beginPath();
+          ctx.strokeStyle = `rgba(0,194,255,${a})`;
+          ctx.lineWidth = .6;
+          ctx.moveTo(nodes[i].x, nodes[i].y);
+          ctx.lineTo(nodes[j].x, nodes[j].y);
+          ctx.stroke();
+        }
+      }
+    }
+
+    // nodes
+    nodes.forEach(n => {
+      n.phase += .018;
+      const pulse = 1 + Math.sin(n.phase) * .35;
+
+      const g = ctx.createRadialGradient(n.x, n.y, 0, n.x, n.y, n.r * 7 * pulse);
+      g.addColorStop(0, 'rgba(0,194,255,.55)');
+      g.addColorStop(1, 'rgba(0,194,255,0)');
+      ctx.beginPath();
+      ctx.arc(n.x, n.y, n.r * 5 * pulse, 0, Math.PI * 2);
+      ctx.fillStyle = g;
+      ctx.fill();
+
+      ctx.beginPath();
+      ctx.arc(n.x, n.y, n.r, 0, Math.PI * 2);
+      ctx.fillStyle = '#00C2FF';
+      ctx.fill();
+
+      n.x += n.vx; n.y += n.vy;
+      if (n.x < 0 || n.x > W) n.vx *= -1;
+      if (n.y < 0 || n.y > H) n.vy *= -1;
+    });
+
+    animId = requestAnimationFrame(draw);
+  }
+
+  let resizeTimer;
+  window.addEventListener('resize', () => {
+    clearTimeout(resizeTimer);
+    resizeTimer = setTimeout(() => { resize(); createNodes(); }, 200);
+  });
+
+  resize(); createNodes(); draw();
+})();
+
+/* ── Scroll Reveal ──────────────────────── */
+(function () {
+  const els = document.querySelectorAll('.reveal');
+  const obs = new IntersectionObserver(entries => {
+    entries.forEach(e => { if (e.isIntersecting) { e.target.classList.add('on'); obs.unobserve(e.target); } });
+  }, { threshold: .12 });
+  els.forEach(el => obs.observe(el));
+})();
+
+/* ── Stat Counters ──────────────────────── */
+(function () {
+  const nums = document.querySelectorAll('.stat-num[data-target]');
+  const obs = new IntersectionObserver(entries => {
+    entries.forEach(e => {
+      if (!e.isIntersecting) return;
+      const el = e.target;
+      const target = parseInt(el.dataset.target);
+      const suffix = el.dataset.suffix || '';
+      obs.unobserve(el);
+      let cur = 0; const step = target / 55;
+      const t = setInterval(() => {
+        cur = Math.min(cur + step, target);
+        const fa = Math.round(cur).toLocaleString('fa-IR');
+        el.textContent = fa + suffix;
+        if (cur >= target) clearInterval(t);
+      }, 22);
+    });
+  }, { threshold: .5 });
+  nums.forEach(el => obs.observe(el));
+})();
+
+/* ── Mobile Menu ────────────────────────── */
+(function () {
+  const btn = document.getElementById('menu-btn');
+  const nav = document.getElementById('mobile-nav');
+  btn.addEventListener('click', () => nav.classList.toggle('open'));
+  document.querySelectorAll('.mnav-link').forEach(a => {
+    a.addEventListener('click', () => nav.classList.remove('open'));
+  });
+})();
+
+/* ── Header Scroll ──────────────────────── */
+(function () {
+  const h = document.getElementById('site-header');
+  window.addEventListener('scroll', () => {
+    h.style.background = window.scrollY > 60
+      ? 'rgba(5,16,31,.97)'
+      : 'rgba(5,16,31,.85)';
+  }, { passive: true });
+})();
+
+/* ── Form Submit ────────────────────────── */
+function handleSubmit(btn) {
+  btn.textContent = '✓ درخواست شما ارسال شد';
+  btn.style.background = '#22c55e';
+  btn.style.color = '#fff';
+  btn.disabled = true;
+}
+</script>
+</body>
+</html>
