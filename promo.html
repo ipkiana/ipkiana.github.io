@@ -335,6 +335,235 @@ figcaption b{color:var(--fg);font-weight:700}
   display:block;font-family:var(--f-mono);font-style:normal;
   font-size:.7rem;letter-spacing:.16em;color:var(--mute);margin-top:6px;
 }
+
+<style>
+/* ---- refinement layer ---- */
+:root{
+  --shadow-soft: 0 24px 70px -42px var(--shade);
+  --shadow-card: 0 12px 35px -28px var(--shade);
+}
+
+html{scroll-behavior:smooth}
+body{
+  overflow-x:hidden;
+  background:
+    radial-gradient(circle at 8% 8%, color-mix(in srgb,var(--accent) 5%,transparent), transparent 28rem),
+    var(--bg);
+}
+.page{min-height:100vh}
+.wrap{position:relative}
+
+.topbar{
+  box-shadow:0 1px 0 color-mix(in srgb,var(--line) 55%,transparent);
+}
+.topbar .wrap{min-height:58px}
+.wordmark{font-size:1.1rem}
+.topnav a{transition:color .2s ease,border-color .2s ease}
+.topnav a:hover{transform:translateY(-1px)}
+
+.hero{
+  position:relative;
+  isolation:isolate;
+}
+.hero::before{
+  content:"";
+  position:absolute;
+  width:clamp(180px,25vw,360px);
+  height:clamp(180px,25vw,360px);
+  border:1px solid color-mix(in srgb,var(--accent) 18%,transparent);
+  border-radius:50%;
+  left:-9rem;
+  top:4rem;
+  z-index:-1;
+  opacity:.55;
+}
+.hero-grid{align-items:center}
+.hero h1{
+  max-width:11ch;
+  letter-spacing:-.035em;
+}
+.lead{line-height:1.9}
+.actions .btn{box-shadow:var(--shadow-card)}
+.btn{
+  min-height:46px;
+  transition:transform .18s ease,background .18s ease,border-color .18s ease,box-shadow .18s ease;
+}
+.btn-primary:hover{
+  transform:translateY(-2px);
+  box-shadow:0 10px 24px -16px var(--fg);
+}
+.btn-ghost:hover{
+  transform:translateY(-2px);
+  box-shadow:var(--shadow-card);
+}
+
+.mark{
+  filter:drop-shadow(0 12px 18px color-mix(in srgb,var(--shade) 55%,transparent));
+  transition:transform .3s ease;
+}
+.mark:hover{transform:rotate(-2deg) translateY(-2px)}
+
+.tape{
+  box-shadow:var(--shadow-soft);
+  transform:rotate(.35deg);
+  transition:transform .25s ease,box-shadow .25s ease;
+}
+.tape:hover{
+  transform:rotate(0) translateY(-3px);
+  box-shadow:0 28px 70px -42px var(--shade);
+}
+.tape-head{letter-spacing:.01em}
+.tape-total{
+  padding:10px 0;
+  border-block:1px solid color-mix(in srgb,var(--line) 70%,transparent);
+}
+
+.sec-head{position:relative}
+.sec-head h2{letter-spacing:-.025em}
+.sec-label{
+  display:inline-flex;
+  align-items:center;
+  gap:9px;
+}
+.sec-label::before{
+  content:"";
+  width:24px;
+  height:1px;
+  background:var(--accent);
+}
+
+.views{gap:16px}
+.view{
+  position:relative;
+  overflow:hidden;
+  box-shadow:var(--shadow-card);
+  transition:transform .22s ease,box-shadow .22s ease,border-color .22s ease;
+}
+.view::after{
+  content:"";
+  position:absolute;
+  inset:auto -30px -45px auto;
+  width:110px;
+  height:110px;
+  border:1px solid color-mix(in srgb,var(--accent) 11%,transparent);
+  border-radius:50%;
+}
+.view:hover{
+  transform:translateY(-4px);
+  border-color:color-mix(in srgb,var(--accent) 40%,var(--line));
+  box-shadow:0 22px 45px -32px var(--shade);
+}
+.view svg{margin-bottom:3px}
+.view h3{font-size:1.05rem}
+
+.split{align-items:center}
+.ledger li{
+  transition:background .18s ease,padding-inline .18s ease;
+}
+.ledger li:hover{
+  background:color-mix(in srgb,var(--surface-2) 38%,transparent);
+  padding-inline:10px;
+}
+.ledger b{white-space:nowrap}
+
+.shots{gap:22px}
+figure img{
+  box-shadow:var(--shadow-card);
+  transition:transform .25s ease,box-shadow .25s ease;
+}
+figure:hover img{
+  transform:translateY(-4px);
+  box-shadow:0 24px 50px -34px var(--shade);
+}
+figcaption{padding-inline:2px}
+
+.phone{filter:drop-shadow(0 18px 28px color-mix(in srgb,var(--shade) 55%,transparent))}
+.phone img{border-radius:24px}
+
+.libs{gap:18px}
+.lib{
+  box-shadow:var(--shadow-card);
+  transition:transform .22s ease,border-color .22s ease;
+}
+.lib:hover{
+  transform:translateY(-4px);
+  border-color:color-mix(in srgb,var(--accent) 35%,var(--line));
+}
+.lib h3{color:var(--accent)}
+
+.chips li{transition:border-color .18s ease,transform .18s ease}
+.chips li:hover{
+  border-color:var(--accent);
+  transform:translateY(-1px);
+}
+
+.code{
+  box-shadow:var(--shadow-card);
+}
+.code-head{
+  background:color-mix(in srgb,var(--surface-2) 38%,var(--surface));
+}
+.code-head button{
+  cursor:pointer;
+  transition:all .18s ease;
+}
+.code-head button:hover{transform:translateY(-1px)}
+
+.foot{padding-bottom:10px}
+.foot .sign{max-width:28ch}
+
+@media (max-width:700px){
+  .topbar .wrap{gap:8px}
+  .topnav{
+    order:3;
+    width:100%;
+    margin-inline:0;
+    overflow-x:auto;
+    flex-wrap:nowrap;
+    padding-bottom:2px;
+    scrollbar-width:none;
+  }
+  .topnav::-webkit-scrollbar{display:none}
+  .topnav a{white-space:nowrap;padding:4px 2px}
+  .chip{margin-inline-start:auto}
+
+  .hero-grid{gap:38px}
+  .hero h1{max-width:none}
+  .mark{height:82px}
+  .actions{width:100%}
+  .actions .btn{flex:1;justify-content:center}
+
+  .tape{max-width:100%;font-size:.88rem}
+  .tape-body{padding-inline:15px}
+  .tape-head{padding-inline:15px}
+
+  .views{grid-template-columns:1fr 1fr}
+  .view{padding:17px 15px}
+  .view p{font-size:.86rem}
+
+  .shots{grid-template-columns:1fr}
+  .phone{max-width:230px}
+
+  .foot{align-items:flex-start}
+  .foot .sign{text-align:start}
+}
+
+@media (max-width:460px){
+  .page{font-size:.95rem}
+  section{padding-block:48px}
+  .views{grid-template-columns:1fr}
+  .actions .btn{flex:initial;width:100%}
+  .hero::before{display:none}
+  .tape-line{gap:7px}
+  .tape-line em{display:none}
+}
+
+@media (prefers-reduced-motion:reduce){
+  html{scroll-behavior:auto}
+  .view,.lib,.tape,figure img,.mark,.btn,.chips li,.ledger li{transition:none}
+}
+</style>
+
 </style>
 
 <div class="page">
@@ -734,5 +963,23 @@ npm run tauri -- build  <span class="c"># بستهٔ دسکتاپ</span></pre>
       }
     });
   });
+})();
+</script>
+
+<script>
+(function(){
+  const links = [...document.querySelectorAll('.topnav a[href^="#"]')];
+  const sections = links.map(a => document.querySelector(a.getAttribute('href'))).filter(Boolean);
+  if (!links.length || !sections.length || !('IntersectionObserver' in window)) return;
+  const observer = new IntersectionObserver(entries => {
+    entries.forEach(entry => {
+      if (!entry.isIntersecting) return;
+      links.forEach(link => {
+        link.style.color = link.getAttribute('href') === '#' + entry.target.id ? 'var(--fg)' : '';
+        link.style.borderBottomColor = link.getAttribute('href') === '#' + entry.target.id ? 'var(--accent)' : '';
+      });
+    });
+  }, {rootMargin:'-25% 0px -65% 0px', threshold:0});
+  sections.forEach(section => observer.observe(section));
 })();
 </script>
