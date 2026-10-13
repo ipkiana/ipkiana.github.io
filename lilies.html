@@ -1,0 +1,198 @@
+<!DOCTYPE html>
+<html lang="fa" dir="rtl">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>منوی کافه لیلیز</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Vazirmatn:wght@400;500;700;800&family=Caveat:wght@600&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --paper: #e8e2e4;
+    --panel: #f1edee;
+    --ink: #3a2a33;
+    --muted: #7c6b74;
+    --accent: #8a4f6d;
+    --line: #3a2a33;
+    --dot: #a99aa2;
+  }
+  @media (prefers-color-scheme: dark) {
+    :root {
+      --paper: #231a20;
+      --panel: #2c2127;
+      --ink: #ece3e7;
+      --muted: #a898a1;
+      --accent: #d3a0bd;
+      --line: #ece3e7;
+      --dot: #6f5e68;
+    }
+  }
+  * { box-sizing: border-box; }
+  html { -webkit-text-size-adjust: 100%; }
+  body {
+    margin: 0;
+    background: var(--paper);
+    color: var(--ink);
+    font-family: "Vazirmatn", Tahoma, "Segoe UI", sans-serif;
+    line-height: 1.7;
+  }
+  .wrap { max-width: 980px; margin: 0 auto; padding: 40px 20px 56px; }
+
+  header { text-align: center; padding: 8px 0 36px; }
+  .logo {
+    font-family: "Caveat", "Segoe Script", cursive;
+    font-weight: 600;
+    font-size: clamp(64px, 16vw, 120px);
+    line-height: 1;
+    letter-spacing: .02em;
+    margin: 0;
+    direction: ltr;
+  }
+  .sub { margin: 10px 0 0; color: var(--muted); font-size: 14px; }
+
+  .grid { display: grid; gap: 28px 40px; grid-template-columns: 1fr; }
+  @media (min-width: 760px) { .grid { grid-template-columns: 1fr 1fr; align-items: start; } }
+
+  section { background: var(--panel); padding: 20px 22px 14px; border-top: 3px solid var(--line); border-radius: 0 0 10px 10px; }
+  section h2 {
+    margin: 0 0 6px;
+    font-size: 20px;
+    font-weight: 800;
+    display: flex; align-items: baseline; justify-content: space-between; gap: 12px; flex-wrap: wrap;
+  }
+  section h2 small { font-size: 12px; font-weight: 500; color: var(--muted); }
+  .cols {
+    display: flex; justify-content: flex-end; gap: 0;
+    font-size: 13px; font-weight: 700; color: var(--accent);
+    padding-bottom: 4px;
+  }
+  .cols span, .price.two span { width: 62px; text-align: center; }
+
+  ul { list-style: none; margin: 0; padding: 0; }
+  li { display: flex; align-items: baseline; gap: 8px; padding: 9px 0; }
+  li .name { font-weight: 500; white-space: nowrap; }
+  li .dots { flex: 1; border-bottom: 2px dotted var(--dot); transform: translateY(-4px); min-width: 12px; }
+  .price { font-weight: 700; font-variant-numeric: tabular-nums; direction: ltr; unicode-bidi: isolate; display: flex; }
+  .price.one { min-width: 62px; justify-content: center; }
+  .price.two { flex-direction: row-reverse; }
+  .price.two span:first-child { color: var(--ink); }
+
+  .span2 { grid-column: 1 / -1; }
+
+  .note { margin-top: 28px; text-align: center; color: var(--muted); font-size: 13px; }
+
+  footer { margin-top: 36px; text-align: center; }
+  footer svg { width: 120px; height: auto; color: var(--ink); }
+  footer p { margin: 10px 0 0; font-size: 14px; letter-spacing: .12em; direction: ltr; }
+  footer a { color: var(--accent); text-decoration: none; font-weight: 700; letter-spacing: .04em; }
+  footer a:hover, footer a:focus-visible { text-decoration: underline; outline: none; }
+
+  @media print {
+    body { background: #fff; color: #000; }
+    section { background: #fff; break-inside: avoid; }
+  }
+</style>
+</head>
+<body>
+<div class="wrap">
+
+  <header>
+    <h1 class="logo">Lilies</h1>
+    <p class="sub">منوی کافه</p>
+  </header>
+
+  <div class="grid">
+
+    <section>
+      <h2>اسپرسو بار گرم</h2>
+      <div class="cols" aria-hidden="true"><span>روبوستا</span><span>عربیکا</span></div>
+      <ul>
+        <li><span class="name">اسپرسو</span><span class="dots"></span><span class="price two"><span>250</span><span>190</span></span></li>
+        <li><span class="name">آمریکانو</span><span class="dots"></span><span class="price two"><span>260</span><span>200</span></span></li>
+        <li><span class="name">لاته</span><span class="dots"></span><span class="price two"><span>310</span><span>250</span></span></li>
+        <li><span class="name">موکا</span><span class="dots"></span><span class="price two"><span>330</span><span>270</span></span></li>
+        <li><span class="name">کاپوچینو</span><span class="dots"></span><span class="price two"><span>300</span><span>240</span></span></li>
+        <li><span class="name">کورتادو</span><span class="dots"></span><span class="price two"><span>280</span><span>220</span></span></li>
+      </ul>
+    </section>
+
+    <section>
+      <h2>اسپرسو بار سرد</h2>
+      <div class="cols" aria-hidden="true"><span>روبوستا</span><span>عربیکا</span></div>
+      <ul>
+        <li><span class="name">آیس اسپرسو</span><span class="dots"></span><span class="price two"><span>250</span><span>190</span></span></li>
+        <li><span class="name">آیس آمریکانو</span><span class="dots"></span><span class="price two"><span>280</span><span>200</span></span></li>
+        <li><span class="name">آیس لاته</span><span class="dots"></span><span class="price two"><span>320</span><span>260</span></span></li>
+        <li><span class="name">آیس موکا</span><span class="dots"></span><span class="price two"><span>340</span><span>280</span></span></li>
+        <li><span class="name">آفوگاتو</span><span class="dots"></span><span class="price two"><span>270</span><span>210</span></span></li>
+        <li><span class="name">سیروپ انتخابی</span><span class="dots"></span><span class="price one">30</span></li>
+      </ul>
+    </section>
+
+    <section>
+      <h2>ماکتیل بار</h2>
+      <ul>
+        <li><span class="name">لیلیز</span><span class="dots"></span><span class="price one">330</span></li>
+        <li><span class="name">سورتیکی</span><span class="dots"></span><span class="price one">320</span></li>
+        <li><span class="name">منگوبری</span><span class="dots"></span><span class="price one">300</span></li>
+        <li><span class="name">بلوپینا</span><span class="dots"></span><span class="price one">300</span></li>
+        <li><span class="name">اسپایس جینجر</span><span class="dots"></span><span class="price one">350</span></li>
+        <li><span class="name">لیموناد</span><span class="dots"></span><span class="price one">200</span></li>
+        <li><span class="name">موهیتو</span><span class="dots"></span><span class="price one">210</span></li>
+      </ul>
+    </section>
+
+    <section>
+      <h2>نوشیدنی بدون کافئین <small>به صورت سرد هم سرو می‌شود</small></h2>
+      <ul>
+        <li><span class="name">هات چاکلت</span><span class="dots"></span><span class="price one">250</span></li>
+        <li><span class="name">وایت چاکلت</span><span class="dots"></span><span class="price one">250</span></li>
+        <li><span class="name">وایت لوتوس</span><span class="dots"></span><span class="price one">290</span></li>
+        <li><span class="name">شیربیسکوییت کارامل</span><span class="dots"></span><span class="price one">210</span></li>
+        <li><span class="name">چای کرک</span><span class="dots"></span><span class="price one">230</span></li>
+        <li><span class="name">چای ماسالا</span><span class="dots"></span><span class="price one">230</span></li>
+        <li><span class="name">ماچا</span><span class="dots"></span><span class="price one">280</span></li>
+      </ul>
+    </section>
+
+    <section>
+      <h2>چای و دمنوش</h2>
+      <ul>
+        <li><span class="name">چای سیاه</span><span class="dots"></span><span class="price one">130</span></li>
+        <li><span class="name">چای سبز</span><span class="dots"></span><span class="price one">150</span></li>
+        <li><span class="name">دمنوش</span><span class="dots"></span><span class="price one">200</span></li>
+      </ul>
+    </section>
+
+    <section>
+      <h2>شیک</h2>
+      <ul>
+        <li><span class="name">شیک نوتلا</span><span class="dots"></span><span class="price one">430</span></li>
+        <li><span class="name">شیک تیرامیسو</span><span class="dots"></span><span class="price one">450</span></li>
+        <li><span class="name">شیک اسنیکرز</span><span class="dots"></span><span class="price one">430</span></li>
+        <li><span class="name">شیک لوتوس</span><span class="dots"></span><span class="price one">430</span></li>
+      </ul>
+    </section>
+
+  </div>
+
+  <p class="note">قیمت‌ها به هزار تومان است.</p>
+
+  <footer>
+    <svg viewBox="0 0 120 150" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+      <path d="M62 146 C60 120 58 96 64 66"/>
+      <path d="M64 66 C46 56 36 40 40 22 C58 28 68 46 64 66 Z"/>
+      <path d="M64 66 C80 54 98 50 108 34 C88 30 70 44 64 66 Z"/>
+      <path d="M64 66 C62 44 64 24 76 8 C88 26 80 50 64 66 Z"/>
+      <path d="M62 112 C44 112 30 100 24 86 C42 84 56 94 62 112 Z"/>
+      <path d="M61 124 C76 120 90 110 96 98 C80 96 66 106 61 124 Z"/>
+      <path d="M52 52 L48 36 M72 52 L82 38 M66 54 L66 34"/>
+    </svg>
+    <p>THANKS FOR BEING HERE</p>
+    <p><a href="https://instagram.com/cafe.lilies" rel="noopener">@cafe.lilies</a></p>
+  </footer>
+
+</div>
+</body>
+</html>
