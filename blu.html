@@ -8,65 +8,387 @@
   <script src="https://cdn.jsdelivr.net/npm/qrcodejs@1.0.0/qrcode.min.js"></script>
 
   <style>
-    body {
-      font-family: sans-serif;
-      text-align: center;
-      padding: 30px;
+    :root {
+      --blue: #2f6bff;
+      --blue-dark: #1d4ed8;
+      --ink: #101828;
+      --muted: #667085;
+      --line: #e4e7ec;
+      --danger: #d92d20;
     }
 
+    * { box-sizing: border-box; }
+
+    body {
+      margin: 0;
+      min-height: 100vh;
+      display: grid;
+      place-items: center;
+      padding: 24px;
+      font-family: "Segoe UI", system-ui, sans-serif;
+      background: linear-gradient(160deg, #eef2ff, #f8fafc);
+      color: var(--ink);
+    }
+
+    .card {
+      width: 100%;
+      max-width: 380px;
+      background: #fff;
+      border: 1px solid var(--line);
+      border-radius: 20px;
+      padding: 32px 28px;
+      box-shadow: 0 12px 32px rgba(16, 24, 40, .08);
+      text-align: center;
+    }
+
+    .brand {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      margin-bottom: 4px;
+      font-size: 22px;
+      font-weight: 700;
+    }
+
+    .brand .dot {
+      width: 12px;
+      height: 12px;
+      border-radius: 4px;
+      background: var(--blue);
+      box-shadow: 0 0 0 4px rgba(47, 107, 255, .15);
+    }
+
+    .subtitle {
+      margin: 0 0 24px;
+      color: var(--muted);
+      font-size: 14px;
+    }
+
+    label {
+      display: block;
+      text-align: left;
+      font-size: 13px;
+      font-weight: 600;
+      color: var(--muted);
+      margin-bottom: 6px;
+    }
+
+    .amount-wrap { position: relative; }
+
     input {
-      font-size: 20px;
-      padding: 10px;
-      width: 200px;
+      width: 100%;
+      font-size: 22px;
+      font-weight: 600;
+      padding: 12px 78px 12px 16px;
+      border: 1.5px solid var(--line);
+      border-radius: 12px;
+      outline: none;
+      font-variant-numeric: tabular-nums;
+      transition: border-color .15s, box-shadow .15s;
+    }
+
+    input:focus {
+      border-color: var(--blue);
+      box-shadow: 0 0 0 4px rgba(47, 107, 255, .12);
+    }
+
+    input.invalid { border-color: var(--danger); }
+
+    .currency {
+      position: absolute;
+      right: 14px;
+      top: 50%;
+      transform: translateY(-50%);
+      font-size: 14px;
+      color: var(--muted);
+      pointer-events: none;
+    }
+
+    .hint {
+      min-height: 18px;
+      margin: 6px 2px 0;
+      font-size: 12px;
+      color: var(--danger);
+      text-align: left;
     }
 
     #qrcode {
-      margin: 30px auto;
-      width: 256px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      min-height: 220px;
+      margin: 12px 0 4px;
+      padding: 14px;
+      border: 1.5px dashed var(--line);
+      border-radius: 16px;
+    }
+
+    .placeholder { color: var(--muted); font-size: 14px; }
+
+    .actions { display: flex; gap: 10px; margin-top: 16px; }
+
+    button {
+      flex: 1;
+      padding: 11px 0;
+      font-size: 14px;
+      font-weight: 600;
+      border: 1.5px solid var(--line);
+      border-radius: 10px;
+      background: #fff;
+      color: var(--ink);
+      cursor: pointer;
+      transition: background .15s, border-color .15s;
+    }
+
+    button:hover:not(:disabled) { background: #f9fafb; border-color: #d0d5dd; }
+    button:disabled { opacity: .45; cursor: not-allowed; }
+
+    button.primary {
+      background: var(--blue);
+      border-color: var(--blue);
+      color: #fff;
+    }
+
+    button.primary:hover:not(:disabled) {
+      background: var(--blue-dark);
+      border-color: var(--blue-dark);
+    }
+
+    /* Recipient settings */
+    details.settings {
+      margin-top: 20px;
+      border-top: 1px solid var(--line);
+      padding-top: 14px;
+      text-align: left;
+    }
+
+    details.settings summary {
+      cursor: pointer;
+      font-size: 13px;
+      font-weight: 600;
+      color: var(--muted);
+      list-style: none;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      user-select: none;
+    }
+
+    details.settings summary::-webkit-details-marker { display: none; }
+
+    details.settings summary::before {
+      content: "▸";
+      transition: transform .15s;
+      color: var(--blue);
+    }
+
+    details.settings[open] summary::before { transform: rotate(90deg); }
+
+    .settings-body { margin-top: 12px; }
+
+    #toInput {
+      font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+      font-size: 14px;
+      font-weight: 500;
+      letter-spacing: .4px;
+      padding: 11px 14px;
+    }
+
+    .settings-body button {
+      width: 100%;
+      margin-top: 2px;
+      font-size: 13px;
+      color: var(--muted);
+    }
+
+    .footer {
+      margin-top: 18px;
+      font-size: 12px;
+      color: var(--muted);
+      min-height: 15px;
     }
   </style>
 </head>
 
 <body>
+  <main class="card">
+    <div class="brand"><span class="dot"></span>BlueBank Payment</div>
+    <p class="subtitle">Scan to pay — the QR updates as you type.</p>
 
-  <h2>BlueBank Payment</h2>
+    <label for="amount">Amount (Toman)</label>
+    <div class="amount-wrap">
+      <input id="amount" type="text" inputmode="numeric" autocomplete="off"
+             placeholder="0" value="5,000,000" aria-describedby="hint">
+      <span class="currency">Toman</span>
+    </div>
+    <p class="hint" id="hint"></p>
 
-  <input
-    id="amount"
-    type="number"
-    placeholder="Amount"
-    value="5000000"
-    oninput="updateQR()"
-  >
+    <div id="qrcode" aria-live="polite">
+      <span class="placeholder">Enter an amount to generate the QR</span>
+    </div>
 
-  <div id="qrcode"></div>
+    <div class="actions">
+      <button id="downloadBtn" type="button" disabled>⬇ Save PNG</button>
+      <button id="copyBtn" type="button" class="primary" disabled>Copy link</button>
+    </div>
+
+    <details class="settings">
+      <summary>Recipient settings</summary>
+      <div class="settings-body">
+        <label for="toInput">Sheba or card number</label>
+        <input id="toInput" type="text" spellcheck="false" autocomplete="off"
+               placeholder="IR…" aria-describedby="toHint">
+        <p class="hint" id="toHint"></p>
+        <button id="resetToBtn" type="button">↺ Reset to default</button>
+      </div>
+    </details>
+
+    <p class="footer" id="footer"></p>
+  </main>
 
   <script>
-    // Set this once
-    const to = "IR730170000000116234274003";
+    const DEFAULT_TO = "IR730170000000116234274003";
+    const KEY_TO     = "bluebank.to";
+    const KEY_AMOUNT = "bluebank.amount";
+    const DEBOUNCE_MS = 250;
 
-    function updateQR() {
-      const amount = document.getElementById("amount").value;
+    // Safe localStorage wrapper (won't crash in private mode)
+    const store = {
+      get: k => { try { return localStorage.getItem(k); } catch { return null; } },
+      set: (k, v) => { try { localStorage.setItem(k, v); } catch {} }
+    };
 
-      const url =
-        `https://app.blubank.com/navigate?page=transfer/occurence-type` +
-        `&to=${encodeURIComponent(to)}` +
-        `&amount=${encodeURIComponent(amount)}`;
+    const amountInput = document.getElementById("amount");
+    const toInput     = document.getElementById("toInput");
+    const toHint      = document.getElementById("toHint");
+    const qrBox       = document.getElementById("qrcode");
+    const hint        = document.getElementById("hint");
+    const footer      = document.getElementById("footer");
+    const downloadBtn = document.getElementById("downloadBtn");
+    const copyBtn     = document.getElementById("copyBtn");
+    const resetToBtn  = document.getElementById("resetToBtn");
 
-      // Remove old QR
-      document.getElementById("qrcode").innerHTML = "";
+    let currentUrl = "";
+    let timer = null;
 
-      // Generate new QR
-      new QRCode(document.getElementById("qrcode"), {
-        text: url,
-        width: 256,
-        height: 256
-      });
+    const digitsOnly  = s => s.replace(/\D/g, "");
+    const getAmount   = () => Number(digitsOnly(amountInput.value)) || 0;
+    const sanitizedTo = () => toInput.value.replace(/\s+/g, "").toUpperCase();
+
+    function validateTo(v) {
+      let msg = "";
+      let bad = false;
+
+      if (!v) {
+        msg = "Recipient is required.";
+        bad = true;
+      } else if (!/^IR\d{24}$/.test(v) && !/^\d{16}$/.test(v)) {
+        // Soft warning — still allowed, in case BlueBank accepts other formats
+        msg = "Heads up: expected a Sheba (IR + 24 digits) or a 16-digit card number.";
+      }
+
+      toHint.textContent = msg;
+      toInput.classList.toggle("invalid", bad);
+      return !bad;
     }
 
-    // Generate initial QR
+    function updateQR() {
+      const amount = getAmount();
+      const toVal  = sanitizedTo();
+      const amountBad = amount <= 0;
+      const toBad     = !validateTo(toVal);
+
+      amountInput.classList.toggle("invalid", amountBad);
+      hint.textContent = amountBad ? "Enter an amount greater than zero." : "";
+
+      downloadBtn.disabled = copyBtn.disabled = amountBad || toBad;
+
+      qrBox.innerHTML = "";
+
+      if (amountBad || toBad) {
+        qrBox.innerHTML = '<span class="placeholder">Fix the fields above to generate the QR</span>';
+        currentUrl = "";
+        footer.textContent = "";
+        return;
+      }
+
+      // Persist recipient once it's valid
+      store.set(KEY_TO, toVal);
+
+      currentUrl =
+        "https://app.blubank.com/navigate?page=transfer/occurence-type" +
+        "&to=" + encodeURIComponent(toVal) +
+        "&amount=" + encodeURIComponent(amount);
+
+      new QRCode(qrBox, {
+        text: currentUrl,
+        width: 220,
+        height: 220
+      });
+
+      footer.textContent = "To: " + toVal.slice(0, 6) + " •••• " + toVal.slice(-4);
+    }
+
+    function scheduleUpdate() {
+      clearTimeout(timer);
+      timer = setTimeout(updateQR, DEBOUNCE_MS);
+    }
+
+    // --- Restore saved values on load ---
+    (function loadStored() {
+      toInput.value = store.get(KEY_TO) || DEFAULT_TO;
+
+      const savedAmount = store.get(KEY_AMOUNT);
+      if (savedAmount) {
+        amountInput.value = Number(savedAmount).toLocaleString("en-US");
+      }
+    })();
+
+    // --- Listeners ---
+    amountInput.addEventListener("input", () => {
+      const raw = digitsOnly(amountInput.value).slice(0, 15);
+      amountInput.value = raw ? Number(raw).toLocaleString("en-US") : "";
+      store.set(KEY_AMOUNT, raw);
+      scheduleUpdate();
+    });
+
+    toInput.addEventListener("input", scheduleUpdate);
+
+    toInput.addEventListener("blur", () => {
+      // Tidy up: strip spaces, uppercase
+      toInput.value = sanitizedTo();
+      updateQR();
+    });
+
+    resetToBtn.addEventListener("click", () => {
+      toInput.value = DEFAULT_TO;
+      store.set(KEY_TO, DEFAULT_TO);
+      updateQR();
+    });
+
+    downloadBtn.addEventListener("click", () => {
+      const canvas = qrBox.querySelector("canvas");
+      if (!canvas) return;
+      const a = document.createElement("a");
+      a.download = "bluebank-payment-" + getAmount() + ".png";
+      a.href = canvas.toDataURL("image/png");
+      a.click();
+    });
+
+    copyBtn.addEventListener("click", async () => {
+      if (!currentUrl) return;
+      try {
+        await navigator.clipboard.writeText(currentUrl);
+        copyBtn.textContent = "✓ Copied";
+      } catch {
+        copyBtn.textContent = "Copy failed";
+      }
+      setTimeout(() => (copyBtn.textContent = "Copy link"), 1500);
+    });
+
+    // --- Initial render ---
     updateQR();
   </script>
-
 </body>
 </html>
