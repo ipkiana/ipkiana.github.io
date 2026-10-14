@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>BlueBank QR</title>
+
+  <script src="https://cdn.jsdelivr.net/npm/qrcodejs@1.0.0/qrcode.min.js"></script>
+
+  <style>
+    body {
+      font-family: sans-serif;
+      text-align: center;
+      padding: 30px;
+    }
+
+    input {
+      font-size: 20px;
+      padding: 10px;
+      width: 200px;
+    }
+
+    #qrcode {
+      margin: 30px auto;
+      width: 256px;
+    }
+  </style>
+</head>
+
+<body>
+
+  <h2>BlueBank Payment</h2>
+
+  <input
+    id="amount"
+    type="number"
+    placeholder="Amount"
+    value="5000000"
+    oninput="updateQR()"
+  >
+
+  <div id="qrcode"></div>
+
+  <script>
+    // Set this once
+    const to = "IR730170000000116234274003";
+
+    function updateQR() {
+      const amount = document.getElementById("amount").value;
+
+      const url =
+        `https://app.blubank.com/navigate?page=transfer/occurence-type` +
+        `&to=${encodeURIComponent(to)}` +
+        `&amount=${encodeURIComponent(amount)}`;
+
+      // Remove old QR
+      document.getElementById("qrcode").innerHTML = "";
+
+      // Generate new QR
+      new QRCode(document.getElementById("qrcode"), {
+        text: url,
+        width: 256,
+        height: 256
+      });
+    }
+
+    // Generate initial QR
+    updateQR();
+  </script>
+
+</body>
+</html>
